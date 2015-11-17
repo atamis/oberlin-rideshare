@@ -7,3 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 user = CreateAdminService.new.call
 puts 'CREATED ADMIN USER: ' << user.email
+
+["Grocery Store", "Liquor Store", "Pharmacy"].each do |name|
+  puts "Making general location " + name
+  GeneralLocation.new(name: name).save!
+end
+
+
