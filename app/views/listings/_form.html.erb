@@ -4,11 +4,11 @@
   <div class="form-inputs">
     <%= f.input :user_id %>
     <%= f.input :depart_maps_id %>
-    <%= f.input :depart_loc_id %>
+    <%= f.select :depart_loc_id, GeneralLocation.all.map { |l| [l.name, l.id] }%>
     <%= f.input :depart_range_start %>
     <%= f.input :depart_range_end %>
     <%= f.input :dest_maps_id %>
-    <%= f.input :dest_loc_id %>
+    <%= f.select :dest_loc_id, GeneralLocation.all.map { |l| [l.name, l.id] }%>
     <%= f.input :dest_range_start %>
     <%= f.input :dest_range_end %>
     <%= f.input :type %>
