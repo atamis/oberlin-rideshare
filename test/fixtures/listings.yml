@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  depart_maps_id: MyString
+  depart_loc_id: 1
+  depart_range_start: 2015-11-17 13:55:11
+  depart_range: 
+  dest_maps_id: MyString
+  dest_loc_id: 1
+  dest_range_start: 2015-11-17 13:55:11
+  dest_range_end: 2015-11-17 13:55:11
+  type: 1
+  money: 9.99
+  comments: MyText
+  detour_time: 
+
+two:
+  user_id: 1
+  depart_maps_id: MyString
+  depart_loc_id: 1
+  depart_range_start: 2015-11-17 13:55:11
+  depart_range: 
+  dest_maps_id: MyString
+  dest_loc_id: 1
+  dest_range_start: 2015-11-17 13:55:11
+  dest_range_end: 2015-11-17 13:55:11
+  type: 1
+  money: 9.99
+  comments: MyText
+  detour_time: 

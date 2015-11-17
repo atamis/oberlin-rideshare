@@ -1,0 +1,1 @@
+json.extract! @listing, :id, :user_id, :depart_maps_id, :depart_loc_id, :depart_range_start, :depart_range, :dest_maps_id, :dest_loc_id, :dest_range_start, :dest_range_end, :type, :money, :comments, :detour_time, :created_at, :updated_at

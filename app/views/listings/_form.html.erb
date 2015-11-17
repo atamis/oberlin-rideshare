@@ -1,0 +1,23 @@
+<%= simple_form_for(@listing) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :user_id %>
+    <%= f.input :depart_maps_id %>
+    <%= f.input :depart_loc_id %>
+    <%= f.input :depart_range_start %>
+    <%= f.input :depart_range %>
+    <%= f.input :dest_maps_id %>
+    <%= f.input :dest_loc_id %>
+    <%= f.input :dest_range_start %>
+    <%= f.input :dest_range_end %>
+    <%= f.input :type %>
+    <%= f.input :money %>
+    <%= f.input :comments %>
+    <%= f.input :detour_time %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

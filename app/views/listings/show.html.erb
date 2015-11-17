@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @listing.user_id %>
+</p>
+
+<p>
+  <strong>Depart maps:</strong>
+  <%= @listing.depart_maps_id %>
+</p>
+
+<p>
+  <strong>Depart loc:</strong>
+  <%= @listing.depart_loc_id %>
+</p>
+
+<p>
+  <strong>Depart range start:</strong>
+  <%= @listing.depart_range_start %>
+</p>
+
+<p>
+  <strong>Depart range:</strong>
+  <%= @listing.depart_range %>
+</p>
+
+<p>
+  <strong>Dest maps:</strong>
+  <%= @listing.dest_maps_id %>
+</p>
+
+<p>
+  <strong>Dest loc:</strong>
+  <%= @listing.dest_loc_id %>
+</p>
+
+<p>
+  <strong>Dest range start:</strong>
+  <%= @listing.dest_range_start %>
+</p>
+
+<p>
+  <strong>Dest range end:</strong>
+  <%= @listing.dest_range_end %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @listing.type %>
+</p>
+
+<p>
+  <strong>Money:</strong>
+  <%= @listing.money %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @listing.comments %>
+</p>
+
+<p>
+  <strong>Detour time:</strong>
+  <%= @listing.detour_time %>
+</p>
+
+<%= link_to 'Edit', edit_listing_path(@listing) %> |
+<%= link_to 'Back', listings_path %>
