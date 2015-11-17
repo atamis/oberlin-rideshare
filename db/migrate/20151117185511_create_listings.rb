@@ -17,6 +17,8 @@ class CreateListings < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+    add_foreign_key :listings, :general_locations, column: :depart_loc_id
+    add_foreign_key :listings, :general_locations, column: :dest_loc_id
   end
 end
 
