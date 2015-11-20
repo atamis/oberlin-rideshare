@@ -2,7 +2,6 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :user_id %>
     <%= f.hidden_field :depart_maps_id %>
     <input id="start_pac_input" class="controls" type="text" placeholder="Enter a starting location">
     <%= f.select :depart_loc_id, GeneralLocation.all.map { |l| [l.name, l.id] }%>
