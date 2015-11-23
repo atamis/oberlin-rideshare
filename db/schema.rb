@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117185511) do
+ActiveRecord::Schema.define(version: 20151123195749) do
 
   create_table "general_locations", force: :cascade do |t|
     t.string   "name",       null: false
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20151117185511) do
     t.integer  "dest_loc_id"
     t.datetime "dest_range_start"
     t.datetime "dest_range_end"
-    t.integer  "type"
+    t.integer  "listing_type"
     t.decimal  "money"
     t.text     "comments"
     t.integer  "detour_time"

@@ -71,6 +71,6 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      params.require(:listing).permit(:depart_maps_id, :depart_loc_id, :depart_range_start, :depart_range_end, :dest_maps_id, :dest_loc_id, :dest_range_start, :dest_range_end, :type, :money, :comments, :detour_time)
+      params.require(:listing).permit(:depart_maps_id, :depart_loc_id, :depart_range_start, :depart_range_end, :dest_maps_id, :dest_loc_id, :dest_range_start, :dest_range_end, :listing_type, :money, :comments, :detour_time)
     end
 end

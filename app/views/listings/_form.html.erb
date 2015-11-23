@@ -12,7 +12,7 @@
     <%= f.select :dest_loc_id, GeneralLocation.all.map { |l| [l.name, l.id] }%>
     <%= f.input :dest_range_start %>
     <%= f.input :dest_range_end %>
-    <%= f.input :type %>
+    <%= f.input :listing_type %>
     <%= f.input :money %>
     <%= f.input :comments %>
     <%= f.input :detour_time %>
