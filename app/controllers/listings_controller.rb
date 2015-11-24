@@ -7,6 +7,10 @@ class ListingsController < ApplicationController
   # GET /listings.json
   def index
     @listings = Listing.all
+    for listing in @listings
+    	listing.depart_maps_id = get_address(listing.depart_maps_id)
+        listing.dest_maps_id = get_address(listing.dest_maps_id)
+    end
   end
 
   # GET /listings/1
