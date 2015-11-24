@@ -4,7 +4,7 @@ class MapsService
 
   def initialize
     @secret = Rails.application.secrets.maps_api_key
-    if @secret == "THIS_IS_NOT_A_VALID_KEY"
+    if @secret.empty?
       raise "Maps API key set incorrectly"
     end
   end
