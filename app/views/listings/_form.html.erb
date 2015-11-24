@@ -4,12 +4,12 @@
   <div class="form-inputs">
     <%= f.hidden_field :depart_maps_id %>
     <input id="start_pac_input" class="controls" type="text" placeholder="Enter a starting location">
-    <%= f.select :depart_loc_id, GeneralLocation.all.map { |l| [l.name, l.id] }%>
+    <%= f.select :depart_loc_id, GeneralLocation.all.map { |l| [l.name, l.id] }, {:include_blank => '-Select-'} %>
     <%= f.input :depart_range_start %>
     <%= f.input :depart_range_end %>
     <%= f.hidden_field :dest_maps_id %>
     <input id="dest_pac_input" class="controls" type="text" placeholder="Enter a destination location">
-    <%= f.select :dest_loc_id, GeneralLocation.all.map { |l| [l.name, l.id] }%>
+    <%= f.select :dest_loc_id, GeneralLocation.all.map { |l| [l.name, l.id] }, {:include_blank => '-Select-'}%>
     <%= f.input :dest_range_start %>
     <%= f.input :dest_range_end %>
     <%= f.input :listing_type %>
