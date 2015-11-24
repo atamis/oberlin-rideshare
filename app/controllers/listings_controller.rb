@@ -21,6 +21,10 @@ class ListingsController < ApplicationController
   end
 
   def get_address(place_id)
+     if(place_id == nil or place_id == "")
+	return "ERROR"
+     end
+
      response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" + place_id + "&key=AIzaSyB42MO_gsZfC2HbFyt_HyaIy4wwdh1mn6o").read
      response = JSON.parse(response)
      if(response["status"] == "OK")
