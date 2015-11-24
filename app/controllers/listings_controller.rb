@@ -16,24 +16,10 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
-     @listing.depart_maps_id = get_address(@listing.depart_maps_id)
-     @listing.dest_maps_id = get_address(@listing.dest_maps_id)
+    maps = MapsService.new
+     @listing.depart_maps_id = maps.get_address(@listing.depart_maps_id)
+     @listing.dest_maps_id = maps.get_address(@listing.dest_maps_id)
   end
-
-  def get_address(place_id)
-     if(place_id == nil or place_id == "")
-	return "ERROR"
-     end
-
-     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" + place_id + "&key=" + Rails.application.secrets.maps_api_key).read
-     response = JSON.parse(response)
-     if(response["status"] == "OK")
-     	response = response["results"].first["formatted_address"]
-     else
-	response = "ERROR"
-     end
-     return response
-  end 
 
   # GET /listings/new
   def new
