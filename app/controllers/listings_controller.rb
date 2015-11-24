@@ -25,7 +25,7 @@ class ListingsController < ApplicationController
 	return "ERROR"
      end
 
-     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" + place_id + "&key=AIzaSyB42MO_gsZfC2HbFyt_HyaIy4wwdh1mn6o").read
+     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" + place_id + "&key=" + Rails.application.secrets.maps_api_key).read
      response = JSON.parse(response)
      if(response["status"] == "OK")
      	response = response["results"].first["formatted_address"]
