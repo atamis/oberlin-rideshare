@@ -27,3 +27,5 @@ group :production do
   gem 'puma'
   gem 'pg'
 end
+
+gem 'dotenv-rails', :groups => [:development, :test]
