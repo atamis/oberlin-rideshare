@@ -17,7 +17,7 @@ class MapsService
      response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" +
                      place_id +
                      "&key=" + @secret).read
-                     .tap { |str| JSON.parse }
+                     .tap { |str| JSON.parse(str) }
 
      if response["status"] == "OK"
         return response["results"].first["formatted_address"]
