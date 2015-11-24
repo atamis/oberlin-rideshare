@@ -12,14 +12,20 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
-     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" + @listing.depart_maps_id + "&key=AIzaSyB42MO_gsZfC2HbFyt_HyaIy4wwdh1mn6o").read
-     response = JSON.parse(response)
-     @listing.depart_maps_id = response["results"].first["formatted_address"]
-
-     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" + @listing.dest_maps_id + "&key=AIzaSyB42MO_gsZfC2HbFyt_HyaIy4wwdh1mn6o").read
-     response = JSON.parse(response)
-     @listing.dest_maps_id = response["results"].first["formatted_address"]
+     @listing.depart_maps_id = get_address(@listing.depart_maps_id)
+     @listing.dest_maps_id = get_address(@listing.dest_maps_id)
   end
+
+  def get_address(place_id)
+     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" + place_id + "&key=AIzaSyB42MO_gsZfC2HbFyt_HyaIy4wwdh1mn6o").read
+     response = JSON.parse(response)
+     if(response["status"] == "OK")
+     	response = response["results"].first["formatted_address"]
+     else
+	response = "ERROR"
+     end
+     return response
+  end 
 
   # GET /listings/new
   def new
