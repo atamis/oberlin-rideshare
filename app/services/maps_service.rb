@@ -1,4 +1,5 @@
 class MapsService
+  require 'open-uri'
   attr_reader :secret
 
   def initialize
@@ -13,9 +14,9 @@ class MapsService
       return "ERROR"
     end
 
-     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id="
-                     + place_id +
-                       "&key=" + Rails.application.secrets.maps_api_key).read
+     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" +
+                     place_id +
+                     "&key=" + @secret).read
                      .tap { |str| JSON.parse }
 
      if response["status"] == "OK"
