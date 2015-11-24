@@ -89,6 +89,6 @@ function initAutocomplete() {
   });
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB42MO_gsZfC2HbFyt_HyaIy4wwdh1mn6o&libraries=places&signed_in=true&callback=initAutocomplete"
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= @maps.secret %>&libraries=places&signed_in=true&callback=initAutocomplete"
 async defer></script>
 <% end %>

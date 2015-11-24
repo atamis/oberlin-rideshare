@@ -7,27 +7,30 @@ class ListingsController < ApplicationController
   # GET /listings.json
   def index
     @listings = Listing.all
+    @maps = MapsService.new
     for listing in @listings
-    	listing.depart_maps_id = get_address(listing.depart_maps_id)
-        listing.dest_maps_id = get_address(listing.dest_maps_id)
+      listing.depart_maps_id = @maps.get_address(listing.depart_maps_id)
+      listing.dest_maps_id = @maps.get_address(listing.dest_maps_id)
     end
   end
 
   # GET /listings/1
   # GET /listings/1.json
   def show
-    maps = MapsService.new
-     @listing.depart_maps_id = maps.get_address(@listing.depart_maps_id)
-     @listing.dest_maps_id = maps.get_address(@listing.dest_maps_id)
+    @maps = MapsService.new
+    @listing.depart_maps_id = @maps.get_address(@listing.depart_maps_id)
+    @listing.dest_maps_id = @maps.get_address(@listing.dest_maps_id)
   end
 
   # GET /listings/new
   def new
+    @maps = MapsService.new
     @listing = Listing.new
   end
 
   # GET /listings/1/edit
   def edit
+    @maps = MapsService.new
   end
 
   # POST /listings
