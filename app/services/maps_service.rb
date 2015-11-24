@@ -13,15 +13,19 @@ class MapsService
     if place_id.empty? or place_id.nil?
       return "ERROR"
     end
-
-     response = open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" +
+    
+     puts "\tQuerying Google Maps API for address of place_ID: " + place_id
+     response = JSON.parse(
+     		     open("https://maps.googleapis.com/maps/api/geocode/json?place_id=" +
                      place_id +
-                     "&key=" + @secret).read
-                     .tap { |str| JSON.parse(str) }
+                     "&key=" + @secret).read)
+
+     puts "\tGot response for query of place_ID: " + place_id
 
      if response["status"] == "OK"
         return response["results"].first["formatted_address"]
      else
+        puts response 
         return "ERROR"
      end
   end
