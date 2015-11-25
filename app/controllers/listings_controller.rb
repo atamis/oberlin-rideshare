@@ -6,11 +6,99 @@ class ListingsController < ApplicationController
   # GET /listings
   # GET /listings.json
   def index
-    @listings = Listing.all
+    @listings
     @maps = MapsService.new
+    
+    if params.has_key?("type") and (params["type"] == "request" or params["type"] == "offer")
+          puts search_params
+          #@listings = Listing.where(listing_type: Listing.listing_types[params["type"]])
+          depart_time_range_begin = params["depart_time_range_begin"]
+          depart_time_range_end = params["depart_time_range_end"]
+ 	  return_time_range_begin = params["return_time_range_begin"]
+          return_time_range_end = params["return_time_range_end"]
+
+          detour_time= params["detour_time"]
+          listing_type = params["type"]
+          destination_location = params["destination_location"]
+          depart_location = params["depart_location"]
+
+          if !depart_time_range_begin.nil?
+               begin
+	            depart_time_range_begin = DateTime.parse(depart_time_range_begin)
+               rescue ArgumentError
+                    depart_time_range_begin = nil
+               end
+          end
+           
+          if !depart_time_range_end.nil?
+               begin
+                    depart_time_range_end = DateTime.parse(depart_time_range_end)
+               rescue ArgumentError
+                    depart_time_range_end = nil
+               end
+          end
+          if !return_time_range_begin.nil?
+               begin
+                    return_time_range_begin = DateTime.parse(returntime_range_begin)
+               rescue ArgumentError
+                    return_time_range_begin = nil
+               end
+          end
+          if !return_time_range_end.nil?
+               begin
+                    return_time_range_end = DateTime.parse(return_time_range_end)
+               rescue ArgumentError
+                    return_time_range_end= nil
+               end
+          end
+
+
+
+          if !detour_time.nil?
+  	       begin 
+                 detour_time = Integer(detour_time)
+	       rescue ArgumentError
+                 detour_time = nil
+               end
+          end 
+
+          if !destination_location.nil? and destination_location.empty?
+	       destination_location = nil
+          end
+
+          if !depart_location.nil? and depart_location.empty?
+               depart_location = nil
+          end
+ 
+            
+          # puts @maps.get_driving_time([departure_location, destination_location])
+          # puts @maps.get_driving_time(["ChIJ5fKhn34KOogRZuYN4JEy-to", "ChIJF-40a4agMIgR80oyLiokn5A","ChIJJ_XOD3kKOogRJiAlB2KXI_A" ,"ChIJGytdNBsKOogR9lS0PwCA2Fg"], Time.now.to_i)
+          @listings = Listing.where("listing_type = ? AND ((depart_range_start >= ? AND depart_range_start <= ?) OR (depart_range_end >= ? AND depart_range_end <= ?))", Listing.listing_types[params["type"]], depart_time_range_begin, depart_time_range_end, depart_time_range_begin, depart_time_range_end)
+         
+          for listing in @listings
+            if listing.listing_type == "offer"
+               detour_time = listing.detour_time
+            end 
+            
+            departure_time = listing.depart_range_start
+            if departure_time < DateTime.now
+               departure_time = DateTime.now
+            end
+            
+            direct_travel_time = @maps.get_driving_time([listing.depart_maps_id, listing.dest_maps_id], departure_time.to_i)
+            puts "direct_travel_time: " + direct_travel_time.to_s
+            detoured_travel_time = @maps.get_driving_time([listing.depart_maps_id, depart_location, destination_location, listing.dest_maps_id], departure_time.to_i)            
+            puts "detoured_travel_time: " + detoured_travel_time.to_s
+            if ((detoured_travel_time - direct_travel_time) > detour_time*60)
+	       listing.comments = "THIS ONE SHOULDNT SHOW UP. DETOUR ADDED (mins):" + ((detoured_travel_time - direct_travel_time)/60).to_s  
+            end 
+         end
+     else
+    	@listings = Listing.all
+    end
     for listing in @listings
-      listing.depart_maps_id = @maps.get_address(listing.depart_maps_id)
-      listing.dest_maps_id = @maps.get_address(listing.dest_maps_id)
+      	listing.depart_maps_id = @maps.get_address(listing.depart_maps_id)
+      	listing.dest_maps_id = @maps.get_address(listing.dest_maps_id)
     end
   end
 
@@ -83,5 +171,8 @@ class ListingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
       params.require(:listing).permit(:depart_maps_id, :depart_loc_id, :depart_range_start, :depart_range_end, :dest_maps_id, :dest_loc_id, :dest_range_start, :dest_range_end, :listing_type, :money, :comments, :detour_time)
+    end
+    def search_params
+      params.permit(:type, :depart_time_range_start, :depart_time_range_end, :return_time_range_start, :return_time_range_end, :detour_time, :depart_location, :destination_location)
     end
 end
