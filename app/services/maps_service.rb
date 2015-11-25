@@ -33,7 +33,7 @@ class MapsService
 
 
 
-   def get_driving_time(locations)
+   def get_driving_time(locations, departure_time)
         if locations.nil? or locations.empty?
           return false
         end
@@ -54,6 +54,10 @@ class MapsService
            end
         end
        
+        if !departure_time.nil?
+           request_url = request_url + "&departure_time=" + departure_time.to_s
+        end
+        puts request_url
         response = JSON.parse(open(request_url).read)
        
         if response["status"] != "OK"
