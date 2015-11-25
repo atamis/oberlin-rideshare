@@ -31,4 +31,50 @@ class MapsService
      end
   end
 
+
+
+   def get_driving_time(locations)
+        if locations.nil? or locations.empty?
+          return false
+        end
+	   
+        if locations.length < 2
+          return false
+        end
+        request_url = "https://maps.googleapis.com/maps/api/directions/json?key=" + @secret
+        for i in 0..locations.length-1
+      	   if i == 0
+              request_url = request_url + "&origin=place_id:" + locations[i]
+           elsif i == 1 and i != locations.length-1
+              request_url = request_url + "&waypoints=place_id:" + locations[i]
+           elsif i != locations.length-1
+              request_url = request_url + "|place_id:" + locations[i]
+           else
+              request_url = request_url + "&destination=place_id:" + locations[i]
+           end
+        end
+       
+        response = JSON.parse(open(request_url).read)
+       
+        if response["status"] != "OK"
+           return false
+        end
+         
+        travel_time = false
+
+        for route in response["routes"]
+           route_travel_time = 0
+           for leg in route["legs"]
+             route_travel_time += leg["duration"]["value"]
+           end
+ 
+           if travel_time == false or route_travel_time < travel_time
+             travel_time = route_travel_time
+           end
+        end
+     
+        return travel_time; 
+       
+   end
+
 end
