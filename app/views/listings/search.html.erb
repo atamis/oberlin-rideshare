@@ -1,2 +1,63 @@
-<h1>Listings#search</h1>
-<p>Find me in app/views/listings/search.html.erb</p>
+<h1>Listings Search</h1>
+<form action="/listings">
+	Searching for? </br>
+	<input type="radio" name="type" value="offer" checked> Offers
+	<input type="radio" name="type" value="request"> Requests
+</br>
+Depart time range start: <input name="depart_time_range_begin" type="datetime-local">
+</br> 
+Depart time range end: <input name="depart_time_range_end" type="datetime-local">
+</br> 
+Max detour_time (if searching for requests)<input type="number" name="detour_time" value=0>
+</br> 
+<input id="start_pac_input" class="controls" type="text"
+placeholder="Enter a starting location">
+</br>
+<input id="dest_pac_input" class="controls" type="text"
+placeholder="Enter a destination location">
+<input type="hidden" name="depart_location" id="listing_start_maps_id">
+<input type="hidden" name="destination_location" id="listing_dest_maps_id">
+
+<button type="submit">Submit</button>
+</form>
+
+<script>
+function initAutocomplete() {
+
+	var startLocationInput = document.getElementById('start_pac_input');
+	var destLocationInput = document.getElementById('dest_pac_input');
+	var startPlaceIDField = document.getElementById('listing_start_maps_id');
+	var destPlaceIDField = document.getElementById('listing_dest_maps_id');
+
+
+
+	var startAutocomplete = new google.maps.places.Autocomplete(startLocationInput);
+	var endAutocomplete = new google.maps.places.Autocomplete(destLocationInput);
+
+
+	startAutocomplete.addListener('place_changed', function() {
+
+		var place = startAutocomplete.getPlace();
+		if (!place.geometry) {
+			return;
+		}
+
+		startPlaceIDField.value =place.place_id;
+
+	});
+
+	endAutocomplete.addListener('place_changed', function() {
+
+		var place = endAutocomplete.getPlace();
+		if (!place.geometry) {
+			return;
+		}
+
+		destPlaceIDField.value = place.place_id;
+
+
+	});
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= MapsService.new.secret %>&libraries=places&signed_in=true&callback=initAutocomplete"
+async defer></script>
