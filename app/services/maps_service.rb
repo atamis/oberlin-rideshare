@@ -65,19 +65,21 @@ class MapsService
         end
          
         travel_time = false
-
+        leg_times = Array.new
         for route in response["routes"]
            route_travel_time = 0
+           route_leg_times = Array.new
            for leg in route["legs"]
              route_travel_time += leg["duration"]["value"]
+             route_leg_times.push(leg["duration"]["value"])
            end
  
            if travel_time == false or route_travel_time < travel_time
              travel_time = route_travel_time
+             leg_times = route_leg_times
            end
         end
-     
-        return travel_time; 
+        return [travel_time, leg_times]
        
    end
 
