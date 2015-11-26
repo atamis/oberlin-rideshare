@@ -2,7 +2,10 @@ class ListingsController < ApplicationController
   require 'open-uri'
   before_action :authenticate_user!
   before_action :set_listing, only: [:show, :edit, :update, :destroy]
-  
+ 
+  def search
+  end
+ 
   # GET /listings
   # GET /listings.json
   def index
