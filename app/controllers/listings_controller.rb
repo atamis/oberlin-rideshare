@@ -100,9 +100,7 @@ class ListingsController < ApplicationController
             puts "direct_travel_time: " + direct_travel_time.to_s
             puts "detoured_travel_time: " + detoured_travel_time.to_s
             
-            if ((detoured_travel_time - direct_travel_time) > detour_time*60)
-	       listing.user_id = "*** (+" + ((detoured_travel_time - direct_travel_time)/60).to_s + " mins) *** + " + listing.user_id.to_s
-            end 
+	    listing.comments = listing.comments + "***("+ ((detoured_travel_time - direct_travel_time)/60).to_s + " mins)***"
          end
      else
     	@listings = Listing.all
