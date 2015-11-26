@@ -75,8 +75,10 @@ class ListingsController < ApplicationController
             
           # puts @maps.get_driving_time([departure_location, destination_location])
           # puts @maps.get_driving_time(["ChIJ5fKhn34KOogRZuYN4JEy-to", "ChIJF-40a4agMIgR80oyLiokn5A","ChIJJ_XOD3kKOogRJiAlB2KXI_A" ,"ChIJGytdNBsKOogR9lS0PwCA2Fg"], Time.now.to_i)
-          @listings = Listing.where("listing_type = ? AND ((depart_range_start >= ? AND depart_range_start <= ?) OR (depart_range_end >= ? AND depart_range_end <= ?))", Listing.listing_types[listing_type], depart_time_range_begin, depart_time_range_end, depart_time_range_begin, depart_time_range_end)
-         
+          # @listings = Listing.where("listing_type = ? AND ((depart_range_start >= ? AND depart_range_start <= ?) OR (depart_range_end >= ? AND depart_range_end <= ?))", Listing.listing_types[listing_type], depart_time_range_begin, depart_time_range_end, depart_time_range_begin, depart_time_range_end)
+          
+          @listings = Listing.where(listing_type: Listing.listing_types[listing_type])
+          puts @listings.inspect
           for listing in @listings
             if listing.listing_type == "offer"
                detour_time = listing.detour_time
@@ -87,23 +89,33 @@ class ListingsController < ApplicationController
                departure_time = DateTime.now
             end
             
-            direct_travel_time = nil
-            detoured_travel_time = nil
-            
+            direct_travel_time_object = nil   
+            detoured_travel_time_object = nil
             if listing_type == "offer"
-	        direct_travel_time = @maps.get_driving_time([listing.depart_maps_id, listing.dest_maps_id], departure_time.to_i)[0]
-                detoured_travel_time = @maps.get_driving_time([listing.depart_maps_id, depart_location, destination_location, listing.dest_maps_id], departure_time.to_i)[0]
+	        direct_travel_time_object = @maps.get_driving_time([listing.depart_maps_id, listing.dest_maps_id], departure_time.to_i)
+                detoured_travel_time_object = @maps.get_driving_time([listing.depart_maps_id, depart_location, destination_location, listing.dest_maps_id], departure_time.to_i)
             elsif listing_type == "request"
-       		if direct_travel_time.nil?
-                  direct_travel_time = @maps.get_driving_time([depart_location, destination_location], departure_time.to_i)[0]
+       		if direct_travel_time_object.nil?
+                  direct_travel_time_object = @maps.get_driving_time([depart_location, destination_location], departure_time.to_i)
 	        end
-                detoured_travel_time = @maps.get_driving_time([depart_location, listing.depart_maps_id, listing.dest_maps_id, destination_location], departure_time.to_i)[0]
+                detoured_travel_time_object = @maps.get_driving_time([depart_location, listing.depart_maps_id, listing.dest_maps_id, destination_location], departure_time.to_i)
             end
   
-            puts "direct_travel_time: " + direct_travel_time.to_s
-            puts "detoured_travel_time: " + detoured_travel_time.to_s
+            puts "direct travel time: " + direct_travel_time_object[0].to_s
+            puts "detoured travel time: " + detoured_travel_time_object[0].to_s
             
-	    listing.comments = listing.comments + "***("+ ((detoured_travel_time - direct_travel_time)/60).to_s + " mins)***"
+            puts detoured_travel_time_object[1]
+	     listing.comments = listing.comments + "*("+ ((detoured_travel_time_object[0] - direct_travel_time_object[0])/60).to_s + " mins)*" 
+             
+            first_leg_time = detoured_travel_time_object[1][0] 
+                    
+ 
+            if listing_type == "offer"
+             if (listing.depart_range_start+first_leg_time >= depart_time_range_begin and listing.depart_range_start+first_leg_time <= depart_time_range_end) or (listing.depart_range_end+first_leg_time >= depart_time_range_begin and listing.depart_range_end+first_leg_time <= depart_time_range_end)
+
+                 listing.comments = listing.comments + " OUT OF TIME RANGE. first leg takes (mins): " + (first_leg_time/60).to_s
+              end
+            end
          end
      else
     	@listings = Listing.all
