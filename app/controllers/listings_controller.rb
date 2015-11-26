@@ -85,10 +85,20 @@ class ListingsController < ApplicationController
                departure_time = DateTime.now
             end
             
-            direct_travel_time = @maps.get_driving_time([listing.depart_maps_id, listing.dest_maps_id], departure_time.to_i)
+            direct_travel_time = nil
+            detoured_travel_time = nil
+            
+            if listing_type == "offer"
+	        direct_travel_time = @maps.get_driving_time([listing.depart_maps_id, listing.dest_maps_id], departure_time.to_i)
+                detoured_travel_time = @maps.get_driving_time([listing.depart_maps_id, depart_location, destination_location, listing.dest_maps_id], departure_time.to_i)
+            elsif listing_type == "request"
+       		direct_travel_time = @maps.get_driving_time([depart_location, destination_location], departure_time.to_i)
+	        detoured_travel_time = @maps.get_driving_time([depart_location, listing.depart_maps_id, listing.dest_maps_id, destination_location], departure_time.to_i)
+            end
+  
             puts "direct_travel_time: " + direct_travel_time.to_s
-            detoured_travel_time = @maps.get_driving_time([listing.depart_maps_id, depart_location, destination_location, listing.dest_maps_id], departure_time.to_i)            
             puts "detoured_travel_time: " + detoured_travel_time.to_s
+            
             if ((detoured_travel_time - direct_travel_time) > detour_time*60)
 	       listing.comments = "THIS ONE SHOULDNT SHOW UP. DETOUR ADDED (mins):" + ((detoured_travel_time - direct_travel_time)/60).to_s  
             end 
