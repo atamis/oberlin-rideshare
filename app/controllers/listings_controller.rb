@@ -91,13 +91,13 @@ class ListingsController < ApplicationController
             detoured_travel_time = nil
             
             if listing_type == "offer"
-	        direct_travel_time = @maps.get_driving_time([listing.depart_maps_id, listing.dest_maps_id], departure_time.to_i)
-                detoured_travel_time = @maps.get_driving_time([listing.depart_maps_id, depart_location, destination_location, listing.dest_maps_id], departure_time.to_i)
+	        direct_travel_time = @maps.get_driving_time([listing.depart_maps_id, listing.dest_maps_id], departure_time.to_i)[0]
+                detoured_travel_time = @maps.get_driving_time([listing.depart_maps_id, depart_location, destination_location, listing.dest_maps_id], departure_time.to_i)[0]
             elsif listing_type == "request"
        		if direct_travel_time.nil?
-                  direct_travel_time = @maps.get_driving_time([depart_location, destination_location], departure_time.to_i)
+                  direct_travel_time = @maps.get_driving_time([depart_location, destination_location], departure_time.to_i)[0]
 	        end
-                detoured_travel_time = @maps.get_driving_time([depart_location, listing.depart_maps_id, listing.dest_maps_id, destination_location], departure_time.to_i)
+                detoured_travel_time = @maps.get_driving_time([depart_location, listing.depart_maps_id, listing.dest_maps_id, destination_location], departure_time.to_i)[0]
             end
   
             puts "direct_travel_time: " + direct_travel_time.to_s
