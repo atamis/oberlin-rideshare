@@ -111,7 +111,7 @@ class ListingsController < ApplicationController
                     
  
             if listing_type == "offer"
-             if (listing.depart_range_start+first_leg_time >= depart_time_range_begin and listing.depart_range_start+first_leg_time <= depart_time_range_end) or (listing.depart_range_end+first_leg_time >= depart_time_range_begin and listing.depart_range_end+first_leg_time <= depart_time_range_end)
+             if !((listing.depart_range_start+first_leg_time >= depart_time_range_begin and listing.depart_range_start+first_leg_time <= depart_time_range_end) or (listing.depart_range_end+first_leg_time >= depart_time_range_begin and listing.depart_range_end+first_leg_time <= depart_time_range_end))
 
                  listing.comments = listing.comments + " OUT OF TIME RANGE. first leg takes (mins): " + (first_leg_time/60).to_s
                  puts listing.depart_range_start
