@@ -127,10 +127,10 @@ class ListingsController < ApplicationController
                 puts depart_time_range_end
                 puts depart_time_range_begin+first_leg_time.seconds
               
-                puts "1: " + depart_time_range_begin+first_leg_time.seconds >= listing.depart_range_start
-                puts "2: " + depart_time_range_begin+first_leg_time.seconds <= listing.depart_range_end
-                puts "3: " + depart_time_range_end+first_leg_time.seconds >= listing.depart_range_start 
-                puts "4: " + depart_time_range_end+first_leg_time.seconds <= listing.depart_range_end
+                puts depart_time_range_begin+first_leg_time.seconds >= listing.depart_range_start
+                puts depart_time_range_begin+first_leg_time.seconds <= listing.depart_range_end
+                puts  depart_time_range_end+first_leg_time.seconds >= listing.depart_range_start 
+                puts  depart_time_range_end+first_leg_time.seconds <= listing.depart_range_end
             end
            end
          end
