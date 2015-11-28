@@ -120,7 +120,7 @@ class ListingsController < ApplicationController
               end
            elsif listing_type == "request"
              puts (depart_time_range_begin+first_leg_time >= listing.depart_range_start and depart_time_range_begin+first_leg_time <= listing.depart_range_end)
-             puts (depart_time_range_end+first_leg_time >= listing.depart_range_start and depart_time_range_end+first_leg_time <= listing.depart_range_end)) 
+             puts (depart_time_range_end+first_leg_time >= listing.depart_range_start and depart_time_range_end+first_leg_time <= listing.depart_range_end) 
             if !((depart_time_range_begin+first_leg_time >= listing.depart_range_start and depart_time_range_begin+first_leg_time <= listing.depart_range_end) or (depart_time_range_end+first_leg_time >= listing.depart_range_start and depart_time_range_end+first_leg_time <= listing.depart_range_end))
                 listing.comments = listing.comments + " OUT OF TIME RANGE. first leg takes (mins): " + (first_leg_time/60).to_s
                 puts listing.depart_range_start
