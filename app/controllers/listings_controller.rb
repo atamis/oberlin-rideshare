@@ -122,7 +122,9 @@ class ListingsController < ApplicationController
              if !((depart_time_range_begin+first_leg_time >= listing.depart_range_start and depart_time_range_begin+first_leg_time <= listing.depart_range_end) or (depart_time_range_end+first_leg_time >= listing.depart_range_start and depart_time_range_end+first_leg_time <= listing.depart_range_end))
                 listing.comments = listing.comments + " OUT OF TIME RANGE. first leg takes (mins): " + (first_leg_time/60).to_s
                 puts listing.depart_range_start
+                puts listing.depart_range_end
                 puts depart_time_range_begin
+                puts depart_time_range_end
                 puts listing.depart_range_start+first_leg_time
             end
            end
