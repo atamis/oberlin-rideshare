@@ -127,7 +127,7 @@ class ListingsController < ApplicationController
                 puts listing.depart_range_end
                 puts depart_time_range_begin
                 puts depart_time_range_end
-                puts listing.depart_range_start+first_leg_time
+                puts depart_time_range_begin+first_leg_time
             end
            end
          end
