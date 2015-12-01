@@ -2,22 +2,21 @@ class ListingsController < ApplicationController
   require 'open-uri'
   before_action :authenticate_user!
   before_action :set_listing, only: [:show, :edit, :update, :destroy]
- 
+
   def search
   end
- 
+
   # GET /listings
   # GET /listings.json
   def index
     @listings
     @maps = MapsService.new
-       
     if search_params.has_key?("type") and (search_params["type"] == "request" or search_params["type"] == "offer")
           puts search_params
           #@listings = Listing.where(listing_type: Listing.listing_types[params["type"]])
           depart_time_range_begin = search_params["depart_time_range_begin"]
           depart_time_range_end = search_params["depart_time_range_end"]
- 	  return_time_range_begin = search_params["return_time_range_begin"]
+          return_time_range_begin = search_params["return_time_range_begin"]
           return_time_range_end = search_params["return_time_range_end"]
 
           detour_time= search_params["detour_time"]
@@ -26,13 +25,13 @@ class ListingsController < ApplicationController
           depart_location = search_params["depart_location"]
 
           if !depart_time_range_begin.nil?
-               begin
-	            depart_time_range_begin = DateTime.parse(depart_time_range_begin)
-               rescue ArgumentError
-                    depart_time_range_begin = nil
-               end
+            begin
+              depart_time_range_begin = DateTime.parse(depart_time_range_begin)
+            rescue ArgumentError
+              depart_time_range_begin = nil
+            end
           end
-           
+
           if !depart_time_range_end.nil?
                begin
                     depart_time_range_end = DateTime.parse(depart_time_range_end)
@@ -58,7 +57,7 @@ class ListingsController < ApplicationController
 
           if !detour_time.nil?
   	       begin 
-                 detour_time = Integer(detour_time)
+                 detour_time = detour_time.to_i
 	       rescue ArgumentError
                  detour_time = nil
                end

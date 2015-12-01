@@ -26,7 +26,6 @@ class MapsService
      if response["status"] == "OK"
         return response["results"].first["formatted_address"]
      else
-        puts response 
         return "ERROR"
      end
   end
@@ -42,7 +41,8 @@ class MapsService
           return false
         end
         request_url = "https://maps.googleapis.com/maps/api/directions/json?key=" + @secret
-        for i in 0..locations.length-1
+
+        for i in 0..locations.length - 1
       	   if i == 0
               request_url = request_url + "&origin=place_id:" + locations[i]
            elsif i == 1 and i != locations.length-1
