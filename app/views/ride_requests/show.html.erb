@@ -2,12 +2,12 @@
 
 <p>
   <strong>Listing:</strong>
-  <%= @ride_request.listing_id %>
+  <%= @ride_request.listing %>
 </p>
 
 <p>
   <strong>User:</strong>
-  <%= @ride_request.user_id %>
+  <%= @ride_request.user %>
 </p>
 
 <p>
@@ -15,5 +15,5 @@
   <%= @ride_request.state %>
 </p>
 
-<%= link_to 'Edit', edit_ride_request_path(@ride_request) %> |
-<%= link_to 'Back', ride_requests_path %>
+<%= link_to 'Edit', edit_listing_ride_request_path(@listing, @ride_request) %> |
+<%= link_to 'Back', listing_ride_requests_path(@listing) %>

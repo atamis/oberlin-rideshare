@@ -1,10 +1,11 @@
 class RideRequestsController < ApplicationController
+  before_action :set_listing
   before_action :set_ride_request, only: [:show, :edit, :update, :destroy]
 
   # GET /ride_requests
   # GET /ride_requests.json
   def index
-    @ride_requests = RideRequest.all
+    @ride_requests = @listing.ride_requests
   end
 
   # GET /ride_requests/1
@@ -14,7 +15,7 @@ class RideRequestsController < ApplicationController
 
   # GET /ride_requests/new
   def new
-    @ride_request = RideRequest.new
+    @ride_request = @listing.ride_requests.new
   end
 
   # GET /ride_requests/1/edit
@@ -24,12 +25,12 @@ class RideRequestsController < ApplicationController
   # POST /ride_requests
   # POST /ride_requests.json
   def create
-    @ride_request = RideRequest.new(ride_request_params)
+    @ride_request = @listing.ride_requests.new(ride_request_params)
 
     respond_to do |format|
       if @ride_request.save
-        format.html { redirect_to @ride_request, notice: 'Ride request was successfully created.' }
-        format.json { render :show, status: :created, location: @ride_request }
+        format.html { redirect_to [@listing, @ride_request], notice: 'Ride request was successfully created.' }
+        format.json { render :show, status: :created, location: [@listing, @ride_request] }
       else
         format.html { render :new }
         format.json { render json: @ride_request.errors, status: :unprocessable_entity }
@@ -42,8 +43,8 @@ class RideRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @ride_request.update(ride_request_params)
-        format.html { redirect_to @ride_request, notice: 'Ride request was successfully updated.' }
-        format.json { render :show, status: :ok, location: @ride_request }
+        format.html { redirect_to [@listing, @ride_request], notice: 'Ride request was successfully updated.' }
+        format.json { render :show, status: :ok, location: [@listing, @ride_request] }
       else
         format.html { render :edit }
         format.json { render json: @ride_request.errors, status: :unprocessable_entity }
@@ -56,12 +57,16 @@ class RideRequestsController < ApplicationController
   def destroy
     @ride_request.destroy
     respond_to do |format|
-      format.html { redirect_to ride_requests_url, notice: 'Ride request was successfully destroyed.' }
+      format.html { redirect_to listing_ride_requests_url(@listing), notice: 'Ride request was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+    def set_listing
+      @listing = Listing.find(params['listing_id'])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_ride_request
       @ride_request = RideRequest.find(params[:id])

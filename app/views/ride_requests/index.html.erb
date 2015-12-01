@@ -15,12 +15,12 @@
   <tbody>
     <% @ride_requests.each do |ride_request| %>
       <tr>
-        <td><%= ride_request.listing_id %></td>
-        <td><%= ride_request.user_id %></td>
+        <td><%= ride_request.listing %></td>
+        <td><%= ride_request.user %></td>
         <td><%= ride_request.state %></td>
-        <td><%= link_to 'Show', ride_request %></td>
-        <td><%= link_to 'Edit', edit_ride_request_path(ride_request) %></td>
-        <td><%= link_to 'Destroy', ride_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', [@listing, ride_request] %></td>
+        <td><%= link_to 'Edit', edit_listing_ride_request_path(@listing, ride_request) %></td>
+        <td><%= link_to 'Destroy', [@listing, ride_request], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Ride request', new_ride_request_path %>
+<%= link_to 'New Ride request', new_listing_ride_request_path(@listing) %>
