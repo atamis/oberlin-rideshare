@@ -4,4 +4,7 @@ class Listing < ActiveRecord::Base
     foreign_key: :depart_loc_id
   belongs_to :dest_location, class_name: "GeneralLocation",
     foreign_key: :dest_loc_id
+
+  belongs_to :user
+  has_many :ride_requests
 end
