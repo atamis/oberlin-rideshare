@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :ride_requests
   get "listings/search"
   resources :listings
   root to: 'visitors#index'

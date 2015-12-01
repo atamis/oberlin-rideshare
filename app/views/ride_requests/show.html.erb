@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Listing:</strong>
+  <%= @ride_request.listing_id %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @ride_request.user_id %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @ride_request.state %>
+</p>
+
+<%= link_to 'Edit', edit_ride_request_path(@ride_request) %> |
+<%= link_to 'Back', ride_requests_path %>
