@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208185942) do
+ActiveRecord::Schema.define(version: 20151208190300) do
 
   create_table "general_locations", force: :cascade do |t|
     t.string   "name",       null: false
@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(version: 20151208185942) do
     t.decimal  "money"
     t.text     "comments"
     t.integer  "detour_time"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "disabled",           default: false
   end
 
   create_table "messages", force: :cascade do |t|

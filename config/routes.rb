@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  resources :messages
   get "listings/search"
   resources :listings do
     resources :ride_requests do
       get '/accept', to: "ride_requests#accept", as: :accept
       get '/reject', to: "ride_requests#reject", as: :reject
+      resources :messages
     end
   end
   root to: 'visitors#index'

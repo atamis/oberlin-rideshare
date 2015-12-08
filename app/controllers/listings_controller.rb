@@ -76,7 +76,7 @@ class ListingsController < ApplicationController
           # puts @maps.get_driving_time(["ChIJ5fKhn34KOogRZuYN4JEy-to", "ChIJF-40a4agMIgR80oyLiokn5A","ChIJJ_XOD3kKOogRJiAlB2KXI_A" ,"ChIJGytdNBsKOogR9lS0PwCA2Fg"], Time.now.to_i)
           # @listings = Listing.where("listing_type = ? AND ((depart_range_start >= ? AND depart_range_start <= ?) OR (depart_range_end >= ? AND depart_range_end <= ?))", Listing.listing_types[listing_type], depart_time_range_begin, depart_time_range_end, depart_time_range_begin, depart_time_range_end)
           
-          @listings = Listing.where(listing_type: Listing.listing_types[listing_type])
+          @listings = Listing.where(listing_type: Listing.listing_types[listing_type]).where(disabled: false)
           puts @listings.inspect
           for listing in @listings
             if listing.listing_type == "offer"
@@ -125,7 +125,7 @@ class ListingsController < ApplicationController
            end
          end
      else
-    	@listings = Listing.all
+    	@listings = Listing.where(disabled: false)
     end
     for listing in @listings
       	listing.depart_maps_id = @maps.get_address(listing.depart_maps_id)
