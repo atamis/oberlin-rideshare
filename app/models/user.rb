@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   validate :oberlin_email
 
   has_many :listings
+  has_many :messages
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

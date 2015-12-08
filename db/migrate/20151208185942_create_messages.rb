@@ -7,5 +7,8 @@ class CreateMessages < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+
+    add_foreign_key :messages, :users, column: :user_id
+    add_foreign_key :messages, :ride_requests, column: :ride_request_id
   end
 end

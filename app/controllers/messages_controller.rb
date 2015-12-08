@@ -1,10 +1,13 @@
 class MessagesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_listing
+  before_action :set_ride_request
   before_action :set_message, only: [:show, :edit, :update, :destroy]
 
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+    @messages = @ride_request.messages.all
   end
 
   # GET /messages/1
@@ -14,7 +17,8 @@ class MessagesController < ApplicationController
 
   # GET /messages/new
   def new
-    @message = Message.new
+    @message = @ride_request.messages.new
+    @message.user = current_user
   end
 
   # GET /messages/1/edit
@@ -24,11 +28,12 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    @message = Message.new(message_params)
+    @message = @ride_request.messages.new(message_params)
+    @message.user = current_user
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to @message, notice: 'Message was successfully created.' }
+        format.html { redirect_to [@listing, @ride_request, @message ], notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }
@@ -42,7 +47,7 @@ class MessagesController < ApplicationController
   def update
     respond_to do |format|
       if @message.update(message_params)
-        format.html { redirect_to @message, notice: 'Message was successfully updated.' }
+        format.html { redirect_to [@listing, @ride_request, @message ], notice: 'Message was successfully updated.' }
         format.json { render :show, status: :ok, location: @message }
       else
         format.html { render :edit }
@@ -56,12 +61,20 @@ class MessagesController < ApplicationController
   def destroy
     @message.destroy
     respond_to do |format|
-      format.html { redirect_to messages_url, notice: 'Message was successfully destroyed.' }
+      format.html { redirect_to listing_ride_request_messages_path(@listing, @ride_request), notice: 'Message was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
+    def set_listing
+      @listing = Listing.find(params['listing_id'])
+    end
+
+    def set_ride_request
+      @ride_request = RideRequest.find(params['ride_request_id'])
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_message
       @message = Message.find(params[:id])

@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @message %> |
-<%= link_to 'Back', messages_path %>
+<%= link_to 'Show', [@listing, @ride_request, @message ] %> |
+<%= link_to 'Back', listing_ride_request_messages_path(@listing, @ride_request) %>
