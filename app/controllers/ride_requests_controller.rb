@@ -1,6 +1,6 @@
 class RideRequestsController < ApplicationController
   before_action :set_listing
-  before_action :set_ride_request, only: [:show, :edit, :update, :destroy]
+  before_action :set_ride_request, only: [:show, :edit, :update, :destroy, :accept, :reject]
 
   # GET /ride_requests
   # GET /ride_requests.json
@@ -20,6 +20,34 @@ class RideRequestsController < ApplicationController
 
   # GET /ride_requests/1/edit
   def edit
+  end
+
+  def accept
+    @ride_request.state = :accepted
+
+    respond_to do |format|
+      if @ride_request.save
+        format.html { redirect_to [@listing, @ride_request], notice: 'Ride request was successfully created.' }
+        format.json { render :show, status: :created, location: [@listing, @ride_request] }
+      else
+        format.html { render :new }
+        format.json { render json: @ride_request.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def reject
+    @ride_request.state = :rejected
+
+    respond_to do |format|
+      if @ride_request.save
+        format.html { redirect_to [@listing, @ride_request], notice: 'Ride request was successfully created.' }
+        format.json { render :show, status: :created, location: [@listing, @ride_request] }
+      else
+        format.html { render :new }
+        format.json { render json: @ride_request.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /ride_requests
@@ -69,7 +97,7 @@ class RideRequestsController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_ride_request
-      @ride_request = RideRequest.find(params[:id])
+      @ride_request = RideRequest.find(params[:id] || params[:ride_request_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

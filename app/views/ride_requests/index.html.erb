@@ -8,16 +8,18 @@
       <th>Listing</th>
       <th>User</th>
       <th>State</th>
-      <th colspan="3"></th>
+      <th colspan="5"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @ride_requests.each do |ride_request| %>
       <tr>
-        <td><%= ride_request.listing %></td>
-        <td><%= ride_request.user %></td>
+        <td><%= link_to "Listing", ride_request.listing %></td>
+        <td><%= link_to ride_request.user.email, ride_request.user %></td>
         <td><%= ride_request.state %></td>
+        <td><%= link_to "Accept", listing_ride_request_accept_path(@listing, ride_request)%></td>
+        <td><%= link_to "Reject", listing_ride_request_reject_path(@listing, ride_request)%></td>
         <td><%= link_to 'Show', [@listing, ride_request] %></td>
         <td><%= link_to 'Edit', edit_listing_ride_request_path(@listing, ride_request) %></td>
         <td><%= link_to 'Destroy', [@listing, ride_request], method: :delete, data: { confirm: 'Are you sure?' } %></td>
