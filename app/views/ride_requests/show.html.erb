@@ -15,5 +15,6 @@
   <%= @ride_request.state %>
 </p>
 
+<%= link_to 'Messages', listing_ride_request_messages_path(@listing, @ride_request) %> |
 <%= link_to 'Edit', edit_listing_ride_request_path(@listing, @ride_request) %> |
 <%= link_to 'Back', listing_ride_requests_path(@listing) %>

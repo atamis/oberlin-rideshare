@@ -33,7 +33,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to [@listing, @ride_request, @message ], notice: 'Message was successfully created.' }
+        format.html { redirect_to listing_ride_request_messages_path(@listing, @ride_request), notice: 'Message was successfully created.' }
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }
