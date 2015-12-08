@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :messages
   get "listings/search"
   resources :listings do
     resources :ride_requests do
