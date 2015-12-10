@@ -15,6 +15,37 @@
   <%= @ride_request.state %>
 </p>
 
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Ride request</th>
+      <th>Body</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @messages.each do |message| %>
+      <tr>
+        <td><%= message.user_id %></td>
+        <td><%= message.ride_request_id %></td>
+        <td><%= message.body %></td>
+        <td><%= link_to 'Show', [@listing, @ride_request, message ] %></td>
+        <td><%= link_to 'Edit', edit_listing_ride_request_message_path(@listing, @ride_request, message) %></td>
+        <td><%= link_to 'Destroy', [@listing, @ride_request, message ], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Message', new_listing_ride_request_message_path(@listing, @ride_request) %>
+
+
+
 <%= link_to 'Messages', listing_ride_request_messages_path(@listing, @ride_request) %> |
 <%= link_to 'Edit', edit_listing_ride_request_path(@listing, @ride_request) %> |
 <%= link_to 'Back', listing_ride_requests_path(@listing) %>
