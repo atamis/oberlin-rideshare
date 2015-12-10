@@ -14,8 +14,8 @@
   <strong>State:</strong>
   <%= @ride_request.state %>
 </p>
-
-
+</br>
+<h4>Messages</h4>
 <table>
   <thead>
     <tr>
@@ -42,10 +42,22 @@
 
 <br>
 
-<%= link_to 'New Message', new_listing_ride_request_message_path(@listing, @ride_request) %>
+<%= simple_form_for([@listing, @ride_request, Message.new ]) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :body %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
 
 
 
-<%= link_to 'Messages', listing_ride_request_messages_path(@listing, @ride_request) %> |
+
+
+
 <%= link_to 'Edit', edit_listing_ride_request_path(@listing, @ride_request) %> |
 <%= link_to 'Back', listing_ride_requests_path(@listing) %>
