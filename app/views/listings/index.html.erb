@@ -5,19 +5,16 @@
 <table>
   <thead>
     <tr>
-      <th>User</th>
-      <th>Depart maps</th>
-      <th>Depart loc</th>
-      <th>Depart range start</th>
-      <th>Depart range end</th>
-      <th>Dest maps</th>
-      <th>Dest loc</th>
-      <th>Dest range start</th>
-      <th>Dest range end</th>
+      <th>Departure location</th>
+      <th>Earliest deparure time</th>
+      <th>Latest departure time</th>
+      <th>Destination location</th>
+      <th>Earliest return time</th>
+      <th>Latest return time</th>
       <th>Type</th>
       <th>Money</th>
       <th>Comments</th>
-      <th>Detour time</th>
+      <th>Maximum detour time</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -25,13 +22,10 @@
   <tbody>
     <% @listings.each do |listing| %>
       <tr>
-        <td><%= listing.user_id %></td>
         <td><%= listing.depart_maps_id %></td>
-        <td><%= listing.depart_loc_id %></td>
         <td><%= listing.depart_range_start %></td>
         <td><%= listing.depart_range_end %></td>
         <td><%= listing.dest_maps_id %></td>
-        <td><%= listing.dest_loc_id %></td>
         <td><%= listing.dest_range_start %></td>
         <td><%= listing.dest_range_end %></td>
         <td><%= listing.listing_type %></td>
