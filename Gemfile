@@ -29,3 +29,5 @@ group :production do
 end
 
 gem 'dotenv-rails', :groups => [:development, :test]
+gem 'cancancan', '~> 1.10'
+
