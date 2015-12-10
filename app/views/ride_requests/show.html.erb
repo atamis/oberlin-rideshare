@@ -1,6 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Request for listing:</strong>
+  <%= link_to @listing.id, listing_path(@listing) %>
+
+<p>
   <strong>Requested at:</strong>
   <%= @ride_request.created_at %>
 </p>
@@ -39,11 +43,11 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :body %>
+    <%= f.input :body, :label=>"Type a message" %>
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, "Send!"%>
   </div>
 <% end %>
 
