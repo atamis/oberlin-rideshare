@@ -1,20 +1,60 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Listing:</strong>
-  <%= @ride_request.listing %>
-</p>
+  <strong>Request for listing:</strong>
+  <%= link_to @listing.id, listing_path(@listing) %>
 
 <p>
-  <strong>User:</strong>
-  <%= @ride_request.user %>
+  <strong>Requested at:</strong>
+  <%= @ride_request.created_at %>
 </p>
 
 <p>
   <strong>State:</strong>
   <%= @ride_request.state %>
 </p>
+</br>
+<h4>Messages</h4>
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Message</th>
+      <th>Time</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-<%= link_to 'Messages', listing_ride_request_messages_path(@listing, @ride_request) %> |
+  <tbody>
+    <% @messages.each do |message| %>
+      <tr>
+        <td><%= (message.user_id == current_user.id) ? "You:" : "Them:"  %></td>
+        <td><b><%= message.body %></b></td>
+        <td><%= message.created_at %></td>
+        <td><%= link_to 'Delete', [@listing, @ride_request, message ], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= simple_form_for([@listing, @ride_request, Message.new ]) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :body, :label=>"Type a message" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Send!"%>
+  </div>
+<% end %>
+
+
+
+
+
+
 <%= link_to 'Edit', edit_listing_ride_request_path(@listing, @ride_request) %> |
 <%= link_to 'Back', listing_ride_requests_path(@listing) %>

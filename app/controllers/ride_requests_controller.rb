@@ -1,5 +1,6 @@
 class RideRequestsController < ApplicationController
   before_action :set_listing
+  before_action :set_messages, only: [:show]
   before_action :set_ride_request, only: [:show, :edit, :update, :destroy, :accept, :reject]
 
   # GET /ride_requests
@@ -110,6 +111,12 @@ class RideRequestsController < ApplicationController
     def set_ride_request
       @ride_request = RideRequest.find(params[:id] || params[:ride_request_id])
     end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_messages
+      @messages = Message.where(ride_request_id: params[:id])
+    end
+
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ride_request_params
