@@ -144,11 +144,13 @@ class ListingsController < ApplicationController
   # GET /listings/new
   def new
     @maps = MapsService.new
-    @listing = Listing.new
+    @listing = Listing.new(user: current_user)
+    authorize! :create, @listing
   end
 
   # GET /listings/1/edit
   def edit
+    authorize! :update, @listing
     @maps = MapsService.new
   end
 
@@ -157,7 +159,9 @@ class ListingsController < ApplicationController
   def create
     @listing = Listing.new(listing_params)
     @listing.user_id = current_user.id
-    
+
+    authorize! :create, @listing
+
     respond_to do |format|
       if @listing.save
         format.html { redirect_to @listing, notice: 'Listing was successfully created.' }
@@ -172,6 +176,7 @@ class ListingsController < ApplicationController
   # PATCH/PUT /listings/1
   # PATCH/PUT /listings/1.json
   def update
+    authorize! :update, @listing
     respond_to do |format|
       if @listing.update(listing_params)
         format.html { redirect_to @listing, notice: 'Listing was successfully updated.' }
@@ -186,6 +191,7 @@ class ListingsController < ApplicationController
   # DELETE /listings/1
   # DELETE /listings/1.json
   def destroy
+    authorize! :destroy, @lisitng
     @listing.destroy
     respond_to do |format|
       format.html { redirect_to listings_url, notice: 'Listing was successfully destroyed.' }

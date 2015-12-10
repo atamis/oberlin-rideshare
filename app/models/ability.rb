@@ -3,17 +3,14 @@ class Ability
 
   def initialize(user)
 
-    # Things that listing owners can do to RideRequests
-    alias_action :accept, :post, to: :participate
-
     if user
       can :manage, Listing, user_id: user.id
 
-      can :manage, RideRequest, user_id: user.id
+      can [:show, :create, :update, :destroy], RideRequest, user_id: user.id
       can :post, RideRequest, user_id: user.id
 
-      can :participate, RideRequest do |rr|
-        rr.listing.user_id = user.id
+      can [:accept, :post, :show], RideRequest do |rr|
+        rr.listing.user_id == user.id
       end
 
       can :manage, Message, user_id: user.id

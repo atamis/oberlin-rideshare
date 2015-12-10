@@ -11,19 +11,24 @@ class RideRequestsController < ApplicationController
   # GET /ride_requests/1
   # GET /ride_requests/1.json
   def show
+    authorize! :show, @ride_request
   end
 
   # GET /ride_requests/new
   def new
     @ride_request = @listing.ride_requests.new
+    @ride_request.user = current_user
+    authorize! :create, @ride_request
   end
 
   # GET /ride_requests/1/edit
   def edit
+    authorize! :update, @ride_request
   end
 
   def accept
     @ride_request.state = :accepted
+    authorize! :accept, @ride_request
 
     respond_to do |format|
       if @ride_request.save
@@ -38,6 +43,7 @@ class RideRequestsController < ApplicationController
 
   def reject
     @ride_request.state = :rejected
+    authorize! :accept, @ride_request
 
     respond_to do |format|
       if @ride_request.save
@@ -53,7 +59,10 @@ class RideRequestsController < ApplicationController
   # POST /ride_requests
   # POST /ride_requests.json
   def create
-    @ride_request = @listing.ride_requests.new(ride_request_params)
+    @ride_request = @listing.ride_requests.new
+    @ride_request.user = current_user
+    @ride_request.state = :undecided
+    authorize! :create, @ride_request
 
     respond_to do |format|
       if @ride_request.save
@@ -69,6 +78,7 @@ class RideRequestsController < ApplicationController
   # PATCH/PUT /ride_requests/1
   # PATCH/PUT /ride_requests/1.json
   def update
+    authorize! :update, @ride_request
     respond_to do |format|
       if @ride_request.update(ride_request_params)
         format.html { redirect_to [@listing, @ride_request], notice: 'Ride request was successfully updated.' }
@@ -83,6 +93,7 @@ class RideRequestsController < ApplicationController
   # DELETE /ride_requests/1
   # DELETE /ride_requests/1.json
   def destroy
+    authorize! :destroy, @ride_request
     @ride_request.destroy
     respond_to do |format|
       format.html { redirect_to listing_ride_requests_url(@listing), notice: 'Ride request was successfully destroyed.' }
