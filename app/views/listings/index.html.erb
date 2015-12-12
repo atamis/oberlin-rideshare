@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Listings</h1>
-
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading"><h4>Listing Results</h3></div>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -37,7 +38,7 @@
     <% end %>
   </tbody>
 </table>
-
+</div>
 <br>
 
 <% if can? :create, current_user.listings.new %>
