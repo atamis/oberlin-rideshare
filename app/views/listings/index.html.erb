@@ -2,7 +2,7 @@
 
 <h1>Listing Listings</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Departure location</th>
@@ -15,17 +15,17 @@
       <th>Money</th>
       <th>Comments</th>
       <th>Maximum detour time</th>
-      <th colspan="3"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @listings.each do |listing| %>
       <tr>
-        <td><%= listing.depart_maps_id %></td>
+        <td><%= link_to listing.depart_maps_id, listing %></td>
         <td><%= listing.depart_range_start %></td>
         <td><%= listing.depart_range_end %></td>
-        <td><%= listing.dest_maps_id %></td>
+        <td><%= link_to listing.dest_maps_id, listing %></td>
         <td><%= listing.dest_range_start %></td>
         <td><%= listing.dest_range_end %></td>
         <td><%= listing.listing_type %></td>
@@ -33,8 +33,6 @@
         <td><%= listing.comments %></td>
         <td><%= listing.detour_time %></td>
         <td><%= link_to 'Show', listing %></td>
-        <td><%= link_to 'Edit', edit_listing_path(listing) %></td>
-        <td><%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -42,4 +40,6 @@
 
 <br>
 
-<%= link_to 'New Listing', new_listing_path %>
+<% if can? :create, current_user.listings.new %>
+  <%= link_to 'New Listing', new_listing_path %>
+<% end %>

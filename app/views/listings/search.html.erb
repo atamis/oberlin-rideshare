@@ -1,17 +1,29 @@
 <h1>Listings Search</h1>
-<form action="/listings">
-	Searching for? </br>
-	<input type="radio" name="type" value="offer" checked> Offers
-	<input type="radio" name="type" value="request"> Requests
-</br>
+<form action="/listings" class="inline">
+<div class="form-group">
+        <label for="type_radios">What are you searching for?</label>
+        <div id="type_radios">
+        <div class="radio">
+		<label><input type="radio" name="type" value="offer" checked> Offers </label>
+        </div>
+        <div class="radio">
+                <label><input id="type_request" type="radio" name="type" value="request"> Requests</label>
+        </div>
+        </div>
+        
+</div>
+
+<div class="form-group">
+     <label for="start_pac_input">Departure location:</label>
+     <input id="start_pac_input" class="controls" type="text"
+		placeholder="Enter a starting location">
+     <label for"depart_time_range_begin">
+</div>
 Depart time range start: <input name="depart_time_range_begin" type="datetime-local">
 </br> 
 Depart time range end: <input name="depart_time_range_end" type="datetime-local">
 </br> 
 Max detour_time (if searching for requests)<input type="number" name="detour_time" value=0>
-</br> 
-<input id="start_pac_input" class="controls" type="text"
-placeholder="Enter a starting location">
 </br>
 <input id="dest_pac_input" class="controls" type="text"
 placeholder="Enter a destination location">

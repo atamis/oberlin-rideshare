@@ -18,9 +18,13 @@
         <td><%= link_to "Listing", ride_request.listing %></td>
         <td><%= link_to ride_request.user.email, ride_request.user %></td>
         <td><%= ride_request.state %></td>
-        <td><%= link_to "Accept", listing_ride_request_accept_path(@listing, ride_request)%></td>
-        <td><%= link_to "Reject", listing_ride_request_reject_path(@listing, ride_request)%></td>
-        <td><%= link_to 'Show', [@listing, ride_request] %></td>
+        <% if can? :accept, ride_request %>
+	  <td><%= link_to "Accept", listing_ride_request_accept_path(@listing, ride_request)%></td>
+	  <td><%= link_to "Reject", listing_ride_request_reject_path(@listing, ride_request)%></td>
+        <% end %>
+        <% if can? :show, ride_request %>
+          <td><%= link_to 'Show', [@listing, ride_request] %></td>
+        <% end %>
         <td><%= link_to 'Edit', edit_listing_ride_request_path(@listing, ride_request) %></td>
         <td><%= link_to 'Destroy', [@listing, ride_request], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
