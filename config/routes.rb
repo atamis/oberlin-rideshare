@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get "listings/search"
+  get "listings/search", as: :listings_search
   resources :listings do
     resources :ride_requests do
       get '/accept', to: "ride_requests#accept", as: :accept
