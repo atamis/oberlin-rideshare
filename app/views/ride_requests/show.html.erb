@@ -1,22 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Request for listing:</strong>
-  <%= link_to @listing.id, listing_path(@listing) %>
 
-<p>
-  <strong>Requested at:</strong>
-  <%= @ride_request.created_at %>
-</p>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Details for the booking request</div>
+<table class="table">
+<tr><td><strong>Listing:</strong></td><td><%= link_to @listing.id, listing_path(@listing) %></td></tr>
+<tr><td><strong>Requested at:</strong></td><td><%= @ride_request.created_at %></td></tr>
+<tr><td><strong>State:</strong></td><td><span class="label label-default"><%= @ride_request.state %></span> 
+<% if can? :accept, @ride_request %>
+          </br>
+          Made a decision? Click below:
+          </br>
+	  <span class="label label-success"><%= link_to "Accept", listing_ride_request_accept_path(@listing, @ride_request)%></span>
+	  </br>
+          <span class="label label-danger"> <%= link_to "Reject", listing_ride_request_reject_path(@listing, @ride_request)%></span>
+<% end %>
+</td>
+</tr>
 
-<p>
-  <strong>State:</strong>
-  <%= @ride_request.state %>
-</p>
-</br>
+</table>
+</div>
 
 <%= render "messages/messages", locals: {listing: @listing, ride_request: @ride_request }%>
 
 
-<%= link_to 'Edit', edit_listing_ride_request_path(@listing, @ride_request) %> |
 <%= link_to 'Back', listing_ride_requests_path(@listing) %>

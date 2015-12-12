@@ -1,69 +1,108 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= @listing.user_id %>
-</p>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Listing information</div>
 
-<p>
-  <strong>Depart maps:</strong>
-  <%= @listing.depart_maps_id %>
-</p>
+<table class="table">
 
-<p>
-  <strong>Depart loc:</strong>
-  <%= @listing.depart_loc_id %>
-</p>
-
-<p>
-  <strong>Depart range start:</strong>
-  <%= @listing.depart_range_start %>
-</p>
-
-<p>
-  <strong>Depart range:</strong>
-  <%= @listing.depart_range_end %>
-</p>
-
-<p>
-  <strong>Dest maps:</strong>
-  <%= @listing.dest_maps_id %>
-</p>
-
-<p>
-  <strong>Dest loc:</strong>
-  <%= @listing.dest_loc_id %>
-</p>
-
-<p>
-  <strong>Dest range start:</strong>
-  <%= @listing.dest_range_start %>
-</p>
-
-<p>
-  <strong>Dest range end:</strong>
-  <%= @listing.dest_range_end %>
-</p>
-
-<p>
+<tr>
+  <td>
   <strong>Type:</strong>
+  </td>
+  <td>
   <%= @listing.listing_type %>
-</p>
+  </td>
+</tr>
 
-<p>
-  <strong>Money:</strong>
-  <%= @listing.money %>
-</p>
+<tr>
+  <td>
+  <strong>Departure location:</strong>
+  </td>
+  <td>
+  <%= @listing.depart_maps_id %>
+  </td>
+</tr>
 
-<p>
+<tr>
+  <td>
+  <strong>Earliest departure time:</strong>
+  </td>
+  <td>
+  <%= @listing.depart_range_start %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Latest departure time:</strong>
+  </td>
+  <td>
+  <%= @listing.depart_range_end %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Destination location:</strong>
+  </td>
+  <td>
+  <%= @listing.dest_maps_id %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Earliest return time:</strong>
+  </td>
+  <td>
+  <%= @listing.dest_range_start %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Latest return time:</strong>
+  </td>
+  <td>
+  <%= @listing.dest_range_end %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <% if(@listing.listing_type == "offer") %>
+    <strong>Payment requested:</strong>
+  <% else %>
+    <strong>Willing to pay:</strong>
+  <% end %>
+  </td>
+  <td>
+  $<%= @listing.money %>
+  </td>
+</tr>
+
+<tr>
+  <td>
   <strong>Comments:</strong>
+  </td>
+  <td>
   <%= @listing.comments %>
-</p>
-
-<p>
+  </td>
+</tr>
+ <% if(@listing.listing_type == "offer") %>
+<tr>
+  <td>
   <strong>Detour time:</strong>
-  <%= @listing.detour_time %>
-</p>
+  </td>
+  <td>
+  <%= @listing.detour_time %> minutes
+  </td>
+</tr>
+<% end %>
+</table>
+</div>
+
 
 <% if can? :update, @listing %>
   <%= link_to 'Edit', edit_listing_path(@listing) %> |

@@ -1,5 +1,7 @@
-<h4>Messages</h4>
-<table>
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Messages</div>
+<table class="table">
   <thead>
     <tr>
       <th>User</th>
@@ -20,9 +22,6 @@
     <% end %>
   </tbody>
 </table>
-
-<br>
-
 <%= simple_form_for([locals[:listing], locals[:ride_request], Message.new ]) do |f| %>
   <%= f.error_notification %>
 
@@ -33,4 +32,7 @@
   <div class="form-actions">
     <%= f.button :submit, "Send!"%>
   </div>
+</div>
 <% end %>
+
+
