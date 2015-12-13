@@ -31,7 +31,9 @@ Email: <%= @user.email if @user.email %>
   <td>
    <span class="label label-<% if(rr.state == "accepted") %>success<% elsif(rr.state == "rejected") %>danger<% else %>default<% end %>"><%= rr.state %></span>
   </td>
-  <td>Cancel</td>
+  <td>
+    <%= link_to 'Cancel', [rr.listing, rr], method: :delete, data: {confirm: "Are you sure?"} %>
+  </td>
   </tr>
 <% end %>
 </table>

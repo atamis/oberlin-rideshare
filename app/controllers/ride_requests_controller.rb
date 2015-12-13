@@ -97,7 +97,7 @@ class RideRequestsController < ApplicationController
     authorize! :destroy, @ride_request
     @ride_request.destroy
     respond_to do |format|
-      format.html { redirect_to listing_ride_requests_url(@listing), notice: 'Ride request was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Ride request was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
