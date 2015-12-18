@@ -11,6 +11,7 @@ class ListingsController < ApplicationController
   def index
     @listings
     @maps = MapsService.new
+    hasErrorOccured = false
     if search_params.has_key?("type") and (search_params["type"] == "request" or search_params["type"] == "offer")
           puts search_params
           #@listings = Listing.where(listing_type: Listing.listing_types[params["type"]])
@@ -28,6 +29,7 @@ class ListingsController < ApplicationController
             begin
               depart_time_range_begin = DateTime.parse(depart_time_range_begin)
             rescue ArgumentError
+              hasErrorOccured = true
               depart_time_range_begin = nil
             end
           end
@@ -36,6 +38,7 @@ class ListingsController < ApplicationController
                begin
                     depart_time_range_end = DateTime.parse(depart_time_range_end)
                rescue ArgumentError
+                    hasErrorOccured = true
                     depart_time_range_end = nil
                end
           end
@@ -43,6 +46,7 @@ class ListingsController < ApplicationController
                begin
                     return_time_range_begin = DateTime.parse(returntime_range_begin)
                rescue ArgumentError
+                    hasErrorOccured = true
                     return_time_range_begin = nil
                end
           end
@@ -50,6 +54,7 @@ class ListingsController < ApplicationController
                begin
                     return_time_range_end = DateTime.parse(return_time_range_end)
                rescue ArgumentError
+                    hasErrorOccured = true
                     return_time_range_end= nil
                end
           end
@@ -63,14 +68,25 @@ class ListingsController < ApplicationController
                end
           end 
 
+          if detour_time.nil? and listing_type == "request"
+	       hasErrorOccured = true
+          end
           if !destination_location.nil? and destination_location.empty?
 	       destination_location = nil
+               hasErrorOccured = true
           end
 
           if !depart_location.nil? and depart_location.empty?
                depart_location = nil
+               hasErrorOccured = true
           end
+         
  
+	  if hasErrorOccured
+             respond_to do |format|
+		format.html { redirect_to listings_search_url, notice: 'There was a problem with your search parameters.' and return } 
+             end
+          end
             
           # puts @maps.get_driving_time([departure_location, destination_location])
           # puts @maps.get_driving_time(["ChIJ5fKhn34KOogRZuYN4JEy-to", "ChIJF-40a4agMIgR80oyLiokn5A","ChIJJ_XOD3kKOogRJiAlB2KXI_A" ,"ChIJGytdNBsKOogR9lS0PwCA2Fg"], Time.now.to_i)
