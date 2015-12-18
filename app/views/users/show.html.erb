@@ -24,7 +24,7 @@ Email: <%= @user.email if @user.email %>
 <% @user.ride_requests.each do |rr| %>
   <tr>
   <td>
-  <%= link_to rr.listing do %>
+  <%= link_to [rr.listing, rr] do %>
     <%= @maps.get_address(rr.listing.depart_maps_id) %> to <%= @maps.get_address(rr.listing.dest_maps_id) %>
   <% end %>
   </td>
@@ -46,7 +46,7 @@ Email: <%= @user.email if @user.email %>
   <% @user.listing_requests.each do |rr| %>
     <tr>
     <td>
-    <%= link_to rr.listing do %>
+    <%= link_to [rr.listing, rr] do %>
       <%= @maps.get_address(rr.listing.depart_maps_id) %> to <%= @maps.get_address(rr.listing.dest_maps_id) %>
     <% end %>
     </td>

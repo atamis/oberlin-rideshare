@@ -1,11 +1,16 @@
 <p id="notice"><%= notice %></p>
 
+<% @maps = MapsService.new %>
 
 <div class="panel panel-default">
   <!-- Default panel contents -->
   <div class="panel-heading">Details for the booking request</div>
 <table class="table">
-<tr><td><strong>Listing:</strong></td><td><%= link_to @listing.id, listing_path(@listing) %></td></tr>
+<tr><td><strong>Listing:</strong></td><td>
+ <%= link_to @ride_request.listing do %>
+    <%= @maps.get_address(@ride_request.listing.depart_maps_id) %> to <%= @maps.get_address(@ride_request.listing.dest_maps_id) %>
+  <% end %>
+</td></tr>
 <tr><td><strong>Requested at:</strong></td><td><%= @ride_request.created_at %></td></tr>
 <tr><td><strong>State:</strong></td><td><span class="label label-<% if(@ride_request.state == "accepted") %>success<% elsif(@ride_request.state == "rejected") %>danger<% else %>default<% end %>"><%= @ride_request.state %></span>
 <% if can? :accept, @ride_request and @ride_request.state == "undecided" %>
