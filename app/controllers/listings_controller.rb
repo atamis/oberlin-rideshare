@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
   require 'open-uri'
   before_action :authenticate_user!
-  before_action :set_listing, only: [:show, :edit, :update, :destroy]
+  before_action :set_listing, only: [:show, :disable, :edit, :update, :destroy]
 
   def search
   end
@@ -127,9 +127,10 @@ class ListingsController < ApplicationController
 
 
         if listing_type == "offer"
-          if ((listing.depart_range_start+first_leg_time >= depart_time_range_begin
-                and listing.depart_range_start+first_leg_time <= depart_time_range_end)
-            or (listing.depart_range_end+first_leg_time >= depart_time_range_begin and listing.depart_range_end+first_leg_time <= depart_time_range_end))
+          if ((listing.depart_range_start+first_leg_time >= depart_time_range_begin and
+               listing.depart_range_start+first_leg_time <= depart_time_range_end) or
+                  (listing.depart_range_end+first_leg_time >= depart_time_range_begin and
+                   listing.depart_range_end+first_leg_time <= depart_time_range_end))
 
             @listings << listing
             #listing.comments = listing.comments + " OUT OF TIME RANGE. first leg takes (mins): " + (first_leg_time/60).to_s
@@ -172,6 +173,21 @@ class ListingsController < ApplicationController
   def edit
     authorize! :update, @listing
     @maps = MapsService.new
+  end
+
+  def disable
+    authorize! :change, @listing
+    @listing.disabled = true
+
+    respond_to do |format|
+      if @listing.save
+        format.html { redirect_to @listing, notice: 'Listing was successfully disabled.' }
+        format.json { render :show, status: :ok, location: @listing }
+      else
+        format.html { render :edit }
+        format.json { render json: @listing.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /listings
