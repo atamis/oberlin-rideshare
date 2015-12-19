@@ -103,12 +103,18 @@
 </table>
 </div>
 
-<% if !can? :update, @listing %>
+<% if !can? :update, @listing and !@listing.disabled %>
 <%= link_to "Book", listing_ride_requests_path(@listing), method: "POST", class: "btn btn-primary btn-lg active" %>
 </br>
 <% end %>
+
 <% if can? :update, @listing %>
   <%= link_to 'Edit', edit_listing_path(@listing) %> |
-  <%= link_to 'Disable', listing_disable_path(@listing) %> |
 <% end %>
+<% if can? :update, @listing and !@listing.disabled %>
+   <%= link_to 'Disable', listing_disable_path(@listing) %> |
+<% elsif @listing.disabled %>
+   <span class="label label-warning">Disabled</span> |
+<% end %> 
+<% else %> 
 <%= link_to 'Back', listings_path %>

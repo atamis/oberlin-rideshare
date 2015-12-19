@@ -1,25 +1,117 @@
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Listing information</div>
+  
 <%= simple_form_for(@listing) do |f| %>
   <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.select :listing_type, Listing.listing_types.keys.map { |w| [w.humanize, w] }%> </br>
+<table class="table">
+
+<tr>
+  <td>
+  <strong>Type:</strong>
+  </td>
+  <td>
+  <%= f.select :listing_type, Listing.listing_types.keys.map { |w| [w.humanize, w] }  %> 
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Departure location:</strong>
+  </td>
+  <td>
     <%= f.hidden_field :depart_maps_id %>
-    <input id="start_pac_input" class="controls" type="text" placeholder="Enter a starting location">
-    <%= f.input :depart_range_start, :label=>"Earliest time you're willing to leave:" %>
-    <%= f.input :depart_range_end, :label=>"Latest time you're willing to leave:" %>
+    <input id="start_pac_input" class="form-control" type="text" placeholder="Enter a starting location">
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Earliest departure time:</strong>
+  </td>
+  <td>
+    <%= f.input :depart_range_start, label: false %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Latest departure time:</strong>
+  </td>
+  <td>
+    <%= f.input :depart_range_end, label: false %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Destination location:</strong>
+  </td>
+  <td>
     <%= f.hidden_field :dest_maps_id %>
-    <input id="dest_pac_input" class="controls" type="text" placeholder="Enter a destination location">
-    <%= f.input :dest_range_start, :label=>"Earliest time you wish to return:" %>
-    <%= f.input :dest_range_end, :label=>"Latest time you wish to return:" %>
-    <%= f.input :money %>
-    <%= f.input :comments %>
-    <%= f.input :detour_time %>
-  </div>
+    <input id="dest_pac_input" class="form-control" type="text" placeholder="Enter a destination location">
+  </td>
+</tr>
 
+<tr>
+  <td>
+  <strong>Earliest return time:</strong>
+  </td>
+  <td>
+    <%= f.input :dest_range_start, label: false %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Latest return time:</strong>
+  </td>
+  <td>
+    <%= f.input :dest_range_end, label: false %>
+  </td>
+</tr>
+
+<tr>
+  <td>
+   <strong>Money</strong>
+  </td>
+  <td>
+   <div class="input-group">
+    <div class="input-group-addon">$</div> 
+   <%= f.input :money, label: false %>
+   </div>
+    <p class="help-block">The amount of money you wish to receive or are willing to pay.</p>
+
+  </td>
+</tr>
+
+<tr>
+  <td>
+  <strong>Comments:</strong>
+  </td>
+  <td>
+  <%= f.input :comments, label: false %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <strong>Detour time:</strong>
+  </td>
+  <td>
+    <div class="input-group">
+    <%= f.input :detour_time, label: false %>
+    <div class="input-group-addon">minutes</div>
+    </div>
+    <p class="help-block">Fill this out if you're driving. This amount of additional time you're willing to drive to let someone car pool with you.</p>
+  </td>
+</tr>
+</table>
+</div>
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: "btn btn-primary" %>
   </div>
-
 <script>
 function initAutocomplete() {
 
