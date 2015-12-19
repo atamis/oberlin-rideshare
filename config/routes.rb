@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get "listings/search", as: :listings_search
   resources :listings do
+    get '/disable', to: "listings#disable", as: :disable
     resources :ride_requests do
       get '/accept', to: "ride_requests#accept", as: :accept
       get '/reject', to: "ride_requests#reject", as: :reject
