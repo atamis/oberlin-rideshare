@@ -22,7 +22,7 @@
           <span class="label label-danger"> <%= link_to "Reject", listing_ride_request_reject_path(@listing, @ride_request)%></span>
 <% end %>
 
-<% if can? :accept, @ride_request and @ride_request.state == "accepted" and !@ride_request.disabled %>
+<% if can? :accept, @ride_request and @ride_request.state == "accepted" and !@ride_request.listing.disabled %>
         </br>
         Don't want anymore requests for this listing?
         <span class="label label-warning">
