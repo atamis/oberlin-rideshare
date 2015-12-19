@@ -104,7 +104,7 @@
 </div>
 <!-- TODO: LINK TO THE RIGHT PLACE --!>
 <% if !can? :update, @listing %>
-<a href="<% %>" class="btn btn-primary btn-lg active" role="button">Book</a>
+<%= link_to "Book", listing_ride_requests_path(@listing), method: "POST", class: "btn btn-primary btn-lg active" %>
 </br>
 <% end %>
 <% if can? :update, @listing %>
