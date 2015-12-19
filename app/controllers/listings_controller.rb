@@ -121,7 +121,7 @@ class ListingsController < ApplicationController
         puts "detoured travel time: " + detoured_travel_time_object[0].to_s
 
         puts detoured_travel_time_object[1]
-        if ((detoured_travel_time_object[0] - direct_travel_time_object[0])/60) < detour_time
+        if ((detoured_travel_time_object[0] - direct_travel_time_object[0])/60) > detour_time
 	   next
         end
 
